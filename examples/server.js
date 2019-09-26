@@ -79,6 +79,10 @@ router.get('/interceptor/get', function(_, res) {
   res.end('hello ')
 })
 
+router.post('/config/post', function(req, res) {
+  res.json(req.body)
+})
+
 registerExtendRouter()
 
 function registerExtendRouter() {

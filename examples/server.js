@@ -75,6 +75,10 @@ router.get('/error/timeout', function(req, res) {
   }, 3000)
 })
 
+router.get('/interceptor/get', function(_, res) {
+  res.end('hello ')
+})
+
 registerExtendRouter()
 
 function registerExtendRouter() {

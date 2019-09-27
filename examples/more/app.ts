@@ -147,52 +147,58 @@ import qs from 'qs'
 //     console.log(e.message)
 //   })
 
-console.log('111111111111111111111')
-axios
-  .get('/more/get', {
-    params: new URLSearchParams('a=b&c=d')
-  })
-  .then(res => {
-    console.log(res)
-  })
-  .catch(err => {
-    console.error(err)
-  })
+// axios
+//   .get('/more/get', {
+//     params: new URLSearchParams('a=b&c=d')
+//   })
+//   .then(res => {
+//     console.log(res)
+//   })
+//   .catch(err => {
+//     console.error(err)
+//   })
 
-console.log('222222222222222222')
-axios
-  .get('/more/get', {
-    params: {
-      a: 1,
-      b: 2,
-      c: ['a', 'b', 'c']
-    }
-  })
-  .then(res => {
-    console.log(res)
-  })
-  .catch(err => {
-    console.error(err)
-  })
+// axios
+//   .get('/more/get', {
+//     params: {
+//       a: 1,
+//       b: 2,
+//       c: ['a', 'b', 'c']
+//     }
+//   })
+//   .then(res => {
+//     console.log(res)
+//   })
+//   .catch(err => {
+//     console.error(err)
+//   })
 
-console.log('3333333333333333')
+// const instance = axios.create({
+//   paramsSerializer(params) {
+//     return qs.stringify(params, { arrayFormat: 'brackets' })
+//   }
+// })
+
+// instance
+//   .get('/more/get', {
+//     params: {
+//       a: 1,
+//       b: 2,
+//       c: ['a', 'b', 'c']
+//     }
+//   })
+//   .then(res => {
+//     console.log(res)
+//   })
+//   .catch(err => {
+//     console.error(err)
+//   })
+
+// https://pic2.zhimg.com/80/v2-d6c87da3380632a288f6eb3e184f078d_hd.jpg
 const instance = axios.create({
-  paramsSerializer(params) {
-    return qs.stringify(params, { arrayFormat: 'brackets' })
-  }
+  baseURL: 'https://pic2.zhimg.com'
 })
 
-instance
-  .get('/more/get', {
-    params: {
-      a: 1,
-      b: 2,
-      c: ['a', 'b', 'c']
-    }
-  })
-  .then(res => {
-    console.log(res)
-  })
-  .catch(err => {
-    console.error(err)
-  })
+instance.get('80/v2-d6c87da3380632a288f6eb3e184f078d_hd.jpg')
+
+instance.get('https://pic2.zhimg.com/80/v2-d6c87da3380632a288f6eb3e184f078d_hd.jpg')

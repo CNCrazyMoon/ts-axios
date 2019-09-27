@@ -186,6 +186,14 @@ function registerMoreRouter() {
     res.status(304)
     res.end()
   })
+
+  router.get('/more/A', function(_, res) {
+    res.end('A')
+  })
+
+  router.get('/more/B', function(_, res) {
+    res.end('B')
+  })
 }
 
 app.use(router)

@@ -195,10 +195,52 @@ import qs from 'qs'
 //   })
 
 // https://pic2.zhimg.com/80/v2-d6c87da3380632a288f6eb3e184f078d_hd.jpg
-const instance = axios.create({
-  baseURL: 'https://pic2.zhimg.com'
-})
+// const instance = axios.create({
+//   baseURL: 'https://pic2.zhimg.com'
+// })
 
-instance.get('80/v2-d6c87da3380632a288f6eb3e184f078d_hd.jpg')
+// instance.get('80/v2-d6c87da3380632a288f6eb3e184f078d_hd.jpg')
 
-instance.get('https://pic2.zhimg.com/80/v2-d6c87da3380632a288f6eb3e184f078d_hd.jpg')
+// instance.get('https://pic2.zhimg.com/80/v2-d6c87da3380632a288f6eb3e184f078d_hd.jpg')
+
+function getA() {
+  return axios.get('/more/A')
+}
+
+function getB() {
+  return axios.get('/more/B')
+}
+
+axios
+  .all([getA(), getB()])
+  .then(
+    axios.spread(function(resA, resB) {
+      console.log(resA.data)
+      console.log(resB.data)
+    })
+  )
+  .catch(() => {
+    //
+  })
+
+axios
+  .all([getA(), getB()])
+  .then(([resA, resB]) => {
+    console.log(resA.data)
+    console.log(resB.data)
+  })
+  .catch(() => {
+    //
+  })
+
+const fakeConfig = {
+  baseURL: 'https://www.baidu.com',
+  url: '/user/12345',
+  params: {
+    idClient: 1,
+    idTest: 2,
+    testString: 'thisIsATest'
+  }
+}
+
+console.log(axios.getUri(fakeConfig))

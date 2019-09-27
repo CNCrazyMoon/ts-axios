@@ -2,6 +2,7 @@ import axios from '../../src/index'
 import 'nprogress/nprogress.css'
 import NProgress from 'nprogress'
 import { AxiosError } from '../../src/typings'
+import qs from 'qs'
 
 // document.cookie = 'a=b'
 //
@@ -124,24 +125,74 @@ import { AxiosError } from '../../src/typings'
 //     //
 //   })
 
+// axios
+//   .get('/more/304')
+//   .then(res => {
+//     console.log(res)
+//   })
+//   .catch((e: AxiosError) => {
+//     console.log(e.message)
+//   })
+
+// axios
+//   .get('/more/304', {
+//     validateStatus(status) {
+//       return status >= 200 && status < 400
+//     }
+//   })
+//   .then(res => {
+//     console.log(res)
+//   })
+//   .catch((e: AxiosError) => {
+//     console.log(e.message)
+//   })
+
+console.log('111111111111111111111')
 axios
-  .get('/more/304')
+  .get('/more/get', {
+    params: new URLSearchParams('a=b&c=d')
+  })
   .then(res => {
     console.log(res)
   })
-  .catch((e: AxiosError) => {
-    console.log(e.message)
+  .catch(err => {
+    console.error(err)
   })
 
+console.log('222222222222222222')
 axios
-  .get('/more/304', {
-    validateStatus(status) {
-      return status >= 200 && status < 400
+  .get('/more/get', {
+    params: {
+      a: 1,
+      b: 2,
+      c: ['a', 'b', 'c']
     }
   })
   .then(res => {
     console.log(res)
   })
-  .catch((e: AxiosError) => {
-    console.log(e.message)
+  .catch(err => {
+    console.error(err)
+  })
+
+console.log('3333333333333333')
+const instance = axios.create({
+  paramsSerializer(params) {
+    return qs.stringify(params, { arrayFormat: 'brackets' })
+  }
+})
+
+instance
+  .get('/more/get', {
+    params: {
+      a: 1,
+      b: 2,
+      c: ['a', 'b', 'c']
+    }
+  })
+  .then(res => {
+    console.log(res)
+  })
+  .catch(err => {
+    console.error(err)
   })

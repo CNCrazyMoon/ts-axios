@@ -4,7 +4,7 @@ import {
   Method,
   AxiosResponse,
   ResolvedFn,
-  RejectFn
+  RejectedFn
 } from '../typings'
 import dispatchRequest, { transformURL } from './dispatchRequest'
 import InterceptorManager from './interceptorManager'
@@ -17,7 +17,7 @@ interface Interceptors {
 
 interface PromiseChain<T> {
   resolved: ResolvedFn<T> | ((config: AxiosRequestConfig) => AxiosPromise)
-  rejected?: RejectFn
+  rejected?: RejectedFn
 }
 export default class Axios {
   defaults: AxiosRequestConfig

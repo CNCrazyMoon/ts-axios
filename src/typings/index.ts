@@ -108,7 +108,7 @@ export interface AxiosClassStatic {
 }
 
 export interface AxiosInterceptorManager<T> {
-  use(resolved: ResolvedFn<T>, reject?: RejectFn): number
+  use(resolved: ResolvedFn<T>, reject?: RejectedFn): number
 
   eject(id: number): void
 }
@@ -117,7 +117,7 @@ export interface ResolvedFn<T> {
   (val: T): T | Promise<T>
 }
 
-export interface RejectFn {
+export interface RejectedFn {
   (error: any): any
 }
 

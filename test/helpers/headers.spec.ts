@@ -21,6 +21,10 @@ describe('helpers:header', () => {
     test('should return empty object if headers is empty string', () => {
       expect(parseHeaders('')).toEqual({})
     })
+
+    test('should return empty object if headers is "\r\n"', () => {
+      expect(parseHeaders('\r\n')).toEqual({})
+    })
   })
 
   describe('processHeaders', () => {

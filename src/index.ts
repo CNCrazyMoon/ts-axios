@@ -1,5 +1,5 @@
 import axios from './axios'
 
-import './typings'
+export * from './typings'
 
 export default axios

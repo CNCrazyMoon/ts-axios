@@ -82,6 +82,34 @@ describe('requests', () => {
     })
   })
 
+  test('should reject when status is 0', () => {
+    const resolveSpy = jest.fn((res: AxiosResponse) => {
+      return res
+    })
+
+    const rejectSpy = jest.fn((e: AxiosError) => {
+      return e
+    })
+
+    // tslint:disable-next-line: no-floating-promises
+    axios('/foo')
+      .then(resolveSpy)
+      .catch(rejectSpy)
+      .then(next)
+
+    return getAjaxRequest().then(req => {
+      req.respondWith({ status: 0 })
+    })
+
+    function next(reason: AxiosResponse | AxiosError) {
+      expect(resolveSpy).not.toHaveBeenCalled()
+      expect(rejectSpy).toHaveBeenCalled()
+      expect(reason instanceof Error).toBeTruthy()
+      expect((reason as AxiosError).message).toBe('Request failed with status code 0')
+      expect((reason as AxiosError).response!.status).toBe(0)
+    }
+  })
+
   test('should reject when validateStatus return false', () => {
     const resolveSpy = jest.fn((res: AxiosResponse) => {
       return res
@@ -243,6 +271,38 @@ describe('requests', () => {
 
     return getAjaxRequest().then(req => {
       expect(req.requestHeaders['Content-Type']).toBe('application/json')
+    })
+  })
+
+  test('should support array buffer response', done => {
+    let res: AxiosResponse
+
+    function str2ab(str: string) {
+      const buff = new ArrayBuffer(str.length * 2)
+      const view = new Uint16Array(buff)
+
+      for (let i = 0; i < str.length; i++) {
+        view[i] = str.charCodeAt(i)
+      }
+
+      return buff
+    }
+
+    // tslint:disable-next-line: no-floating-promises
+    axios('/foo', { responseType: 'arraybuffer' }).then(data => (res = data))
+
+    // tslint:disable-next-line: no-floating-promises
+    getAjaxRequest().then(req => {
+      req.respondWith({
+        status: 200,
+        // @ts-ignore
+        responseText: str2ab('Hello world')
+      })
+
+      setTimeout(() => {
+        expect(res.data.byteLength).toBe(22)
+        done()
+      }, 100)
     })
   })
 })
